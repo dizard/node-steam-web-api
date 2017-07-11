@@ -1,4 +1,4 @@
-module.exports = function getInterface(iface, apiKey) {
+module.exports = function getInterface(iface, apiKey, proxy) {
   function request(httpmethod, method, version, args, callback) {
     if (apiKey)
       args.key = apiKey;
@@ -20,6 +20,9 @@ module.exports = function getInterface(iface, apiKey) {
       path: '/' + iface + '/' + method + '/v' + version,
       method: httpmethod
     };
+    if (proxy) {
+      options.proxy = proxy;
+    }
     
     if (httpmethod == 'GET')
       options.path += '/?' + data;
