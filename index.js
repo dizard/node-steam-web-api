@@ -21,6 +21,7 @@ module.exports = function getInterface(iface, apiKey, proxy) {
       method: httpmethod
     };
     if (proxy) {
+      console.log('web api use proxy', proxy);
       options.proxy = proxy;
     }
     
