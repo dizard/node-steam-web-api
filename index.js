@@ -27,6 +27,7 @@ module.exports = function getInterface(iface, apiKey, proxy) {
             path: 'https://api.steampowered.com/' + iface + '/' + method + '/v' + version,
             method: httpmethod
         };
+        console.log(options);
     }else{
         var options = {
             hostname: 'api.steampowered.com',
