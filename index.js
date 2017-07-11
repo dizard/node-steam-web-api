@@ -1,3 +1,5 @@
+var url = require('url');
+
 module.exports = function getInterface(iface, apiKey, proxy) {
   function request(httpmethod, method, version, args, callback) {
     if (apiKey)
@@ -15,14 +17,22 @@ module.exports = function getInterface(iface, apiKey, proxy) {
         return key + '=' + encodeURIComponent(value);
     }).join('&');
     
-    var options = {
-      hostname: 'api.steampowered.com',
-      path: '/' + iface + '/' + method + '/v' + version,
-      method: httpmethod
-    };
+
     if (proxy) {
-      console.log('web api use proxy', proxy);
-      options.proxy = proxy;
+        var urlParsed = url.parse(proxy);
+        console.log('web api use proxy', proxy);
+        var options = {
+            host: urlParsed.hostname,
+            port: urlParsed.port,
+            path: 'https://api.steampowered.com/' + iface + '/' + method + '/v' + version,
+            method: httpmethod
+        };
+    }else{
+        var options = {
+            hostname: 'api.steampowered.com',
+            path: '/' + iface + '/' + method + '/v' + version,
+            method: httpmethod
+        };
     }
     
     if (httpmethod == 'GET')
